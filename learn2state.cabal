@@ -36,7 +36,7 @@ library
         , text                ^>=1.2 && <2.0
         , unordered-containers ^>=0.2.19.0
     hs-source-dirs:   src
-    default-language: Haskell2010
+    default-language: GHC2021
 
 executable learn2state
     main-is:          Main.hs
@@ -51,4 +51,21 @@ executable learn2state
         learn2state
 
     hs-source-dirs:   app
-    default-language: Haskell2010
+    default-language: GHC2021
+
+test-suite spec
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs:
+    test
+  other-modules: 
+    Learn2StateSpec
+  ghc-options: -Wall
+  build-depends:
+    , base  ^>=4.16.4.0
+    , learn2state
+    , hspec ==2.*
+    , HUnit ==1.6.*
+    , unordered-containers ^>=0.2.19.0
+  default-language:   GHC2021
+  build-tool-depends: hspec-discover:hspec-discover == 2.*
