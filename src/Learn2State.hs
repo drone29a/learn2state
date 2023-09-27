@@ -19,10 +19,11 @@ data GameState = GameState
 
 -- This is a simple "monad stack". We can combine multiple monads
 -- using monad transformers. Here we are combining IO and State (via StateT).
-type Game = StateT GameState IO
+newtype Game a = Game {unGame :: StateT GameState IO a}
+  deriving (Functor, Applicative, Monad, MonadState GameState)
 
-runGame :: (StateT s IO) a -> s -> IO (a, s)
-runGame = runStateT
+runGame :: Game a -> GameState -> IO (a, GameState)
+runGame = runStateT . unGame
 
 initialState :: GameState
 initialState =
